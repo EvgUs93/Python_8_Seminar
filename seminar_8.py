@@ -79,8 +79,20 @@ def write_file(file_name):
         f_writer = DictWriter(data, fieldnames=['имя', 'фамилия', 'телефон'])
         f_writer.writeheader()
         f_writer.writerows(res)
+
+def copy_data(file_name):
+    user_num = int(input("введите номер записи:"))
+    data1 = read_file(file_name)
+    user_data = data1[user_num-1]
+    res = read_file(file_name1)
+    res.append(user_data)
+    with open(file_name1, 'w', encoding='utf-8', newline='') as data:
+        f_writer = DictWriter(data, fieldnames=['имя', 'фамилия', 'телефон'])
+        f_writer.writeheader()
+        f_writer.writerows(res)
         
 file_name ='phone.csv'
+file_name1 = 'phone1.csv'
 
 def main():
     while True:
@@ -96,5 +108,9 @@ def main():
                 print("файл не создан, создайтй его!")
                 continue
             print(*read_file(file_name))
+        elif command == 'c':
+            if not exists(file_name1):
+                create_file(file_name1)
+            copy_data(file_name)
             
 main()
